@@ -12,9 +12,8 @@ df = pd.read_csv('data.csv')
 df.head(10)
 
 # Drop columns that are not needed
-df = df[['texture_mean', 'area_mean', 'concavity_mean', 'area_se', 'concavity_se',
-         'fractal_dimension_se', 'smoothness_worst', 'concavity_worst',
-         'symmetry_worst', 'fractal_dimension_worst', 'diagnosis']]
+df = df[['area_mean','area_se', 'concavity_mean', 'concavity_se', 'concavity_worst', 'fractal_dimension_se',
+         'fractal_dimension_worst', 'smoothness_worst', 'symmetry_worst', 'texture_mean', 'diagnosis']]
 
 lb = LabelEncoder()
 df['diagnosis'] = lb.fit_transform(df['diagnosis'].values)
