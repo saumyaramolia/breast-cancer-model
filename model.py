@@ -10,25 +10,38 @@ import pickle
 
 df = pd.read_csv('data.csv')
 df.head(10)
-df.isna().sum()
-df = df.dropna(axis=1)
-df.head(10)
+
+# Drop columns that are not needed
+df = df[['texture_mean', 'area_mean', 'concavity_mean', 'area_se', 'concavity_se',
+         'fractal_dimension_se', 'smoothness_worst', 'concavity_worst',
+         'symmetry_worst', 'fractal_dimension_worst', 'diagnosis']]
+
 lb = LabelEncoder()
-df.iloc[:, 1] = lb.fit_transform(df.iloc[:, 1].values)
+df['diagnosis'] = lb.fit_transform(df['diagnosis'].values)
 df['diagnosis'].value_counts()
-plt.figure(figsize=(25, 25))
-sns.heatmap(df.iloc[:, 1:10].corr(), annot=True)
-sns.pairplot(df.iloc[:, 1:5], hue="diagnosis")
-X = df.iloc[:, 2:32].values
-y = df.iloc[:, 1].values.astype('int')
+
+plt.figure(figsize=(10, 10))
+sns.heatmap(df.corr(), annot=True)
+sns.pairplot(df, hue="diagnosis")
+
+X = df.iloc[:, 0:10].values
+y = df['diagnosis'].values.astype('int')
+
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0)
+
 st = StandardScaler()
 X_train = st.fit_transform(X_train)
-X_test = st.fit_transform(X_test)
+X_test = st.transform(X_test)
+
 print(X_train.shape)
+
 log = LogisticRegression()
 log.fit(X_train, y_train)
+
 print(log.score(X_train, y_train) * 100)
 accuracy_score(y_test, log.predict(X_test))
+
 print(classification_report(y_test, log.predict(X_test)))
+
+# Save the model
 pickle.dump(log, open("./model/model.pkl", "wb"))
