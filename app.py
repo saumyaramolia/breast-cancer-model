@@ -1,13 +1,16 @@
 from flask import Flask, request, jsonify
 import pickle
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 
 # Load the trained model
 model = pickle.load(open("./model/model.pkl", "rb"))
 
 # Define the selected features
-selected_features = ['area_mean','area_se', 'concavity_mean', 'concavity_se', 'concavity_worst', 'fractal_dimension_se',
+selected_features = ['area_mean', 'area_se', 'concavity_mean', 'concavity_se', 'concavity_worst',
+                     'fractal_dimension_se',
                      'fractal_dimension_worst', 'smoothness_worst', 'symmetry_worst', 'texture_mean']
 
 

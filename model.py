@@ -12,7 +12,7 @@ df = pd.read_csv('data.csv')
 df.head(10)
 
 # Drop columns that are not needed
-df = df[['area_mean','area_se', 'concavity_mean', 'concavity_se', 'concavity_worst', 'fractal_dimension_se',
+df = df[['area_mean', 'area_se', 'concavity_mean', 'concavity_se', 'concavity_worst', 'fractal_dimension_se',
          'fractal_dimension_worst', 'smoothness_worst', 'symmetry_worst', 'texture_mean', 'diagnosis']]
 
 lb = LabelEncoder()
