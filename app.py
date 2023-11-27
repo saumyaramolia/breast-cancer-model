@@ -4,6 +4,7 @@ from flask_cors import CORS
 
 app = Flask(__name__)
 CORS(app)
+CORS(app, origins='*')
 
 # Load the trained model
 model = pickle.load(open("./model/model.pkl", "rb"))
