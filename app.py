@@ -26,7 +26,9 @@ def predict():
         # Convert the prediction to a human-readable label
         diagnosis = "Malignant" if prediction[0] == 1 else "Benign"
 
-        return jsonify({"prediction": diagnosis})
+        response = jsonify({"prediction": diagnosis})
+        response.headers.add("Access-Control-Allow-Origin", "*")
+        return response
     except Exception as e:
         return jsonify({"error": str(e)})
 
